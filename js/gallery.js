@@ -67,22 +67,6 @@ const images = [
 const container = document.querySelector('.gallery');
 
 
-// const createImagesMarkup = images => 
-//      images
-//         .map(({ preview, original, description }) => {
-//             return `<li class="gallery-item">
-//     <a class="gallery-link" href=${original}>
-//       <img
-//         class="gallery-image"
-//         src= ${preview}
-//         data-source=${original}
-//         alt=${description}
-//       />
-//     </a>
-//   </li>`;
-//         })
-//         .join('')
-// ;
 
 const createImagesMarkup = images
   .map(({ preview, original, description }) => {
@@ -108,9 +92,33 @@ container.addEventListener('click', e => {
     return;
   }
   const imgForModal = e.target.dataset.source;
+ 
   const instance = basicLightbox.create(`<img src="${imgForModal}">`);
   instance.show();
+
+
+  //  закриття модалки по ESC
+  
+  const handleEscapeClick = (event) => {
+    if (event.code === "Escape") {
+      instance.close(() => {
+        document.removeEventListener("keydown", handleEscapeClick);
+      });
+    }
+  };
+
+  instance.show(() => {
+    document.addEventListener("keydown", handleEscapeClick);
+  });
+  
 });
+
+ 
+  
+
+
+
+ 
 
 
 
