@@ -94,7 +94,9 @@ container.addEventListener('click', e => {
   const imgForModal = e.target.dataset.source;
  
   const instance = basicLightbox.create(`<img src="${imgForModal}">`);
-  instance.show();
+  instance.show(() => {
+    document.addEventListener("keydown", handleEscapeClick);
+  });
 
 
   //  закриття модалки по ESC
@@ -105,23 +107,6 @@ container.addEventListener('click', e => {
         document.removeEventListener("keydown", handleEscapeClick);
       });
     }
-  };
-
-  instance.show(() => {
-    document.addEventListener("keydown", handleEscapeClick);
-  });
+  };  
   
 });
-
- 
-  
-
-
-
- 
-
-
-
-
-
-
